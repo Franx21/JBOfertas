@@ -9,20 +9,10 @@ use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
-    public function __construct()
+    public function index()
     {
-        $this->middleware('auth')->except(['show', 'index']);
-    }
-
-    public function index(User $user)
-    {
-
-        $posts = Post::where('user_id', $user->id)->latest()->paginate(12);
-
-        return view('dashboard', [
-            'user' => $user,
-            'posts' => $posts,
-        ]);
+        $this->authorize('viewAny', Post::class);
+        return view('vacantes.index');
     }
 
     public function create()
