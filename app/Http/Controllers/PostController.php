@@ -11,8 +11,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        $this->authorize('viewAny', Post::class);
-        return view('vacantes.index');
+        //$this->authorize('viewAny', Post::class);
+        return view('dashboard');
     }
 
     public function create()
@@ -20,42 +20,42 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request)
-    {
-        $this->validate(
-            $request,
-            [
-                'titulo' => 'required|max:255',
-                'descripcion' => 'required',
-                'imagen' => 'required'
-            ]
-        );
+    // public function store(Request $request)
+    // {
+    //     $this->validate(
+    //         $request,
+    //         [
+    //             'titulo' => 'required|max:255',
+    //             'descripcion' => 'required',
+    //             'imagen' => 'required'
+    //         ]
+    //     );
 
-        Post::create([
-            'titulo' => $request->titulo,
-            'descripcion' => $request->descripcion,
-            'imagen' => $request->imagen,
-            'user_id' => auth()->user()->id
-        ]);
+    //     Post::create([
+    //         'titulo' => $request->titulo,
+    //         'descripcion' => $request->descripcion,
+    //         'imagen' => $request->imagen,
+    //         'user_id' => auth()->user()->id
+    //     ]);
 
-        return redirect()->route('posts.index', auth()->user()->username);
-    }
+    //     return redirect()->route('posts.index', auth()->user()->username);
+    // }
 
-    public function show(User $user, Post $post)
-    {
-        return view('posts.show', ['post' => $post, 'user' => $user]);
-    }
+    // public function show(User $user, Post $post)
+    // {
+    //     return view('posts.show', ['post' => $post, 'user' => $user]);
+    // }
 
-    public function destroy(Post $post)
-    {
-        $this->authorize('delete', $post);
-        $post->delete();
+    // public function destroy(Post $post)
+    // {
+    //     $this->authorize('delete', $post);
+    //     $post->delete();
 
-        $imagen_path = public_path('uploads/' . $post->imagen);
+    //     $imagen_path = public_path('uploads/' . $post->imagen);
 
-        if (File::exists($imagen_path)) {
-            unlink($imagen_path);
-        }
-        return redirect()->route('posts.index', auth()->user()->username);
-    }
+    //     if (File::exists($imagen_path)) {
+    //         unlink($imagen_path);
+    //     }
+    //     return redirect()->route('posts.index', auth()->user()->username);
+    // }
 }

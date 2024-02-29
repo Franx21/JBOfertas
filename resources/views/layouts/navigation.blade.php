@@ -12,12 +12,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard', 'welcome')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard', 'home')">
                         {{ __('Inicio') }}
                     </x-nav-link>
                 </div>
+                @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('posts.create')" :active="request()->routeIs('dashboard', 'welcome')">
+                    <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create', 'welcome')">
                         {{ __('Publicar') }}
                     </x-nav-link>
                 </div>
@@ -28,9 +29,9 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex flex-row items-center overflow-hidden relative bg-lime-500 text-black py-4 font-bold uppercase -- before:block
-                            before:absolute before:h-full before:w-1/2 before:rounded-full before:bg-white before:top-0 before:left-1/4
-                            before:transition-transform before:opacity-0 before:hover:opacity-100 hover:text-white hover:before:animate-ping
-                            transition-all duration-300">
+                        before:absolute before:h-full before:w-1/2 before:rounded-full before:bg-white before:top-0 before:left-1/4
+                        before:transition-transform before:opacity-0 before:hover:opacity-100 hover:text-white hover:before:animate-ping
+                        transition-all duration-300">
                             <div>{{ auth()->user()->name }}</div>
 
                             <div class="ms-1">
@@ -61,7 +62,7 @@
                     </x-slot>
                 </x-dropdown>
             </div>
-
+            @endauth
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
@@ -77,7 +78,7 @@
             </div>
         </div>
     </div>
-
+    @auth
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
@@ -103,11 +104,12 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                                    this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
         </div>
     </div>
+    @endauth
 </nav>
