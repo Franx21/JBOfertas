@@ -11,15 +11,33 @@ class Post extends Model
 
     protected $fillable = [
         'titulo',
+        'link',
+        'precio_oferta',
+        'precio_regular',
+        'envio',
+        'tienda',
+        'cupon',
+        'categoria_id',
+        'primer_dia',
+        'ultimo_dia',
         'descripcion',
-        'imagen',
-        'user_id'
+        'imagen_id',
+        'user_id',
     ];
 
-    // public function user()
+    // public function categoria()
     // {
-    //     return $this->belongsTo(User::class)->select(['name', 'username']);
+    //     return $this->belongsTo(Categoria::class);
     // }
+    // public function posts()
+    // {
+    //     return $this->hasMany(Post::class);
+    // }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class)->select(['name', 'username']);
+    }
 
     // public function comentario()
     // {

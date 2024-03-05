@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,7 +10,8 @@ use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
-    public function index()
+
+    public function index(User $user)
     {
         //$this->authorize('viewAny', Post::class);
         return view('dashboard');
@@ -17,29 +19,53 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categorias = Categoria::all();
+
+        return view('posts.create', [
+            'categorias' => $categorias,
+        ]);
     }
+    public function store(Request $request)
+    {
 
-    // public function store(Request $request)
-    // {
-    //     $this->validate(
-    //         $request,
-    //         [
-    //             'titulo' => 'required|max:255',
-    //             'descripcion' => 'required',
-    //             'imagen' => 'required'
-    //         ]
-    //     );
+        $this->validate(
+            $request,
+            [
+                'titulo' => 'required|max:255',
+                'link' => 'required',
+                'precio_oferta' => 'required',
+                'precio_regular' => 'nullable',
+                'envio' => 'nullable',
+                'tienda' => 'required',
+                'cupon' => 'nullable',
+                'categoria' => 'required',
+                'primer_dia' => 'required',
+                'ultimo_dia' => 'nullable',
+                'descripcion' => 'required',
+                'imagen' => 'required|max:5000'
+            ]
+        );
 
-    //     Post::create([
-    //         'titulo' => $request->titulo,
-    //         'descripcion' => $request->descripcion,
-    //         'imagen' => $request->imagen,
-    //         'user_id' => auth()->user()->id
-    //     ]);
+        Post::create([
+            'titulo' => $request->titulo,
+            'link' => $request->link,
+            'precio_oferta' => $request->precio_oferta,
+            'precio_regular' => $request->precio_regular,
+            'envio' => $request->envio,
+            'tienda' => $request->tienda,
+            'cupon' => $request->cupon,
+            'categoria_id' => $request->categoria,
+            'primer_dia' => $request->primer_dia,
+            'ultimo_dia' => $request->ultimo_dia,
+            'descripcion' => $request->descripcion,
+            'imagen_id' => $request->imagen,
+            'user_id' => auth()->user()->id,
+        ]);
 
-    //     return redirect()->route('posts.index', auth()->user()->username);
-    // }
+        session()->flash('mensaje', 'La oferta se publico correctamente');
+
+        return redirect()->route('dashboard', auth()->user()->username);
+    }
 
     // public function show(User $user, Post $post)
     // {

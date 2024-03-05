@@ -4,6 +4,7 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\NuevoController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -22,13 +23,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 
 Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
+
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-// Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-// Route::get('/{user:username}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::post('/posts/create', [PostController::class, 'store'])->name('posts.store');
+Route::get('/posts/nuevo', NuevoController::class)->name('nuevo');
+// Route::get('/posts/imagenes', [ImagenController::class, 'index'])->name('imagenes.index');
+Route::post('/posts/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');
+// // Route::get('/{user:username}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 // Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 // Route::post('/{user:username}/posts/{post}', [ComentarioController::class, 'store'])->name('comentario.store');
 
-// Route::post('/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');
+
 // //Like de fotos
 // Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.likes.store');
 // Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('posts.likes.destroy');
