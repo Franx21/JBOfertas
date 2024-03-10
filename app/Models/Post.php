@@ -25,32 +25,32 @@ class Post extends Model
         'user_id',
     ];
 
-    // public function categoria()
-    // {
-    //     return $this->belongsTo(Categoria::class);
-    // }
-    // public function posts()
-    // {
-    //     return $this->hasMany(Post::class);
-    // }
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 
     public function user()
     {
-        return $this->belongsTo(User::class)->select(['name', 'username']);
+        return $this->belongsTo(User::class)->select(['username']);
     }
 
-    // public function comentario()
-    // {
-    //     return $this->hasMany(Comentario::class);
-    // }
+    public function comentario()
+    {
+        return $this->hasMany(Comentario::class);
+    }
 
-    // public function likes()
-    // {
-    //     return $this->hasMany(Like::class);
-    // }
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 
-    // public function checkLike(User $user)
-    // {
-    //     return $this->likes->contains('user_id', $user->id);
-    // }
+    public function checkLike(User $user)
+    {
+        return $this->likes->contains('user_id', $user->id);
+    }
 }

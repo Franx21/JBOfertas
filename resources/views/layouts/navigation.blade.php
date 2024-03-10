@@ -37,7 +37,7 @@
                         before:absolute before:h-full before:w-1/2 before:rounded-full before:bg-white before:top-0 before:left-1/4
                         before:transition-transform before:opacity-0 before:hover:opacity-100 hover:text-white hover:before:animate-ping
                         transition-all duration-300">
-                            <div>{{ auth()->user()->name }}</div>
+                            <div>{{ auth()->user()->username}}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"

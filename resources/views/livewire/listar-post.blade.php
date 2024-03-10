@@ -8,7 +8,7 @@
     </div>
     <div class="bg-white dark:bg-gray-900 shadow-sm rounded-lg p-6 divide-y divide-lime-500">
         @forelse ($posts as $post)
-        <div class="flex flex-col items-center py-4 sm:flex sm:h-full sm:py-5">
+        <div class="flex flex-col items-center py-4 sm:flex sm:h-full sm:py-5 md:flex-row">
             <div class="w-full sm:p-1 font-sans ">
                 <img class="rounded-lg w-full max-h-72" src="{{ asset('uploads/posts') . '/' . $post->imagen_id }}"
                     alt="Imagen del post {{ $post->titulo }}">
@@ -16,7 +16,8 @@
             <div class="flex flex-col sm:pl-5 w-auto justify-between">
                 <div class="sm:flex sm:justify-between">
                     <div class="sm:max-w-2xl pt-4 pb-2">
-                        <a class="text-justify sm:text-xl sm:py-2 font-extrabold text-gray-600" href="#">
+                        <a class="text-justify sm:text-xl sm:py-2 font-extrabold text-gray-600"
+                            href="{{ route('posts.show', ['post' => $post->id]) }}">
                             {{ $post->titulo }}
                         </a>
                     </div>
