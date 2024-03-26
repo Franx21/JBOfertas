@@ -22,21 +22,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/posts/nuevo', NuevoController::class)->name('nuevo');
+Route::get('/{user:username}', [PostController::class, 'index'])->name('posts.index');
 Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/posts/create', [PostController::class, 'store'])->name('posts.store');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::post('/posts/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');
 // Route::get('/posts/imagenes', [ImagenController::class, 'index'])->name('imagenes.index');
-// Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
-// Route::post('/{user:username}/posts/{post}', [ComentarioController::class, 'store'])->name('comentario.store');
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::post('/posts/{post}', [ComentarioController::class, 'store'])->name('comentario.store');
 
 
 // //Like de fotos
 // Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.likes.store');
 // Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('posts.likes.destroy');
 
-// Route::get('/{user:username}', [PostController::class, 'index'])->name('posts.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
