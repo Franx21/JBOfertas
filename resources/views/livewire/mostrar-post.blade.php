@@ -2,11 +2,6 @@
     <div class="flex flex-col items-center lg:flex md:flex-row md:gap-8 md:justify-center ">
         <img src="{{ asset('uploads/posts') . '/' . $post->imagen_id }}" class=" h-96 w-96 rounded-lg"
             alt="Imagen del post {{ $post->titulo }}">
-        {{-- <div class="p-3 flex items-center gap-4">
-            @auth
-            <livewire:like-post />
-            @endauth
-        </div> --}}
         <div class="pt-3">
             <div class="sm:max-w-2xl pt-4 pb-2">
                 <p class="text-justify sm:text-xl sm:py-2 font-extrabold text-gray-600">
@@ -43,16 +38,24 @@
                     </span>
                 </p>
             </div>
-            @auth
-            @if ($post->user_id === auth()->user()->id)
-            <form method="POST" action="{{ route('posts.destroy', $post) }}">
-                @method('DELETE')
-                @csrf
-                <input type="submit" value="Eliminar Publicacion"
-                    class="bg-red-500 hover:bg-red-600 p-2 rounded text-white font-bold mt-4 cursor-pointer">
-            </form>
-            @endif
-            @endauth
+            <div class="flex items-center gap-3">
+                @auth
+                @if ($post->user_id === auth()->user()->id)
+                <form method="POST" action="{{ route('posts.destroy', $post) }}">
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" value="Eliminar Publicacion"
+                        class="bg-red-500 hover:bg-red-600 p-2 rounded text-white font-bold mt-4 cursor-pointer">
+                </form>
+                @endif
+                <div class="flex items-center pt-4 gap-3">
+                    @auth
+                    <livewire:like-post :post="$post" />
+                    <livewire:save-post :post="$post" />
+                    @endauth
+                </div>
+                @endauth
+            </div>
             <div>
                 <x-primary-button class="mt-2 h-10 font-bold text-lg w-full">
                     {{ __('Ver Oferta!') }}
