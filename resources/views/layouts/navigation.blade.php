@@ -1,43 +1,105 @@
 <nav x-data="{ open: false }" class="bg-black dark:bg-lime-500 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-950 dark:text-gray-800" />
-                    </a>
+        <div class="flex justify-between h-16 w-auto">
+            <div class="flex items-center">
+                <div class="flex items-center">
+                    <!-- Logo -->
+                    <div class="shrink-0 flex items-center">
+                        <a href="{{ route('dashboard') }}">
+                            <x-application-logo
+                                class="block h-9 w-auto fill-current text-gray-950 dark:text-gray-800" />
+                        </a>
+                    </div>
+                    <!-- Navigation Links -->
+                    <d iv class="hidden space-x-1 sm:-my-px sm:ms-10 sm:flex items-center">
+                        <x-nav-link class="items-center flex gap-1" :href="route('dashboard')"
+                            :active="request()->routeIs('dashboard', 'home')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            </svg>
+                            {{ __('Inicio') }}
+                        </x-nav-link>
+                    </d>
                 </div>
-
-                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard', 'home')">
-                        {{ __('Inicio') }}
+                    <x-nav-link class="items-center flex gap-1" :href="route('nuevo')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+                        </svg>
+                        {{ __('Nuevo') }}
                     </x-nav-link>
                 </div>
                 @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create', 'welcome')">
+                    <x-nav-link class="items-center flex gap-1" :href="route('posts.create')"
+                        :active="request()->routeIs('posts.create', 'welcome')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
                         {{ __('Publicar') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('nuevo')">
-                        {{ __('Nuevo') }}
-                    </x-nav-link>
-                </div>
+                @endauth
             </div>
 
+            @if (Auth::guest())
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
+                <x-nav-link href="{{ route('login') }}">
+                    {{ __('Iniciar Sesion') }}
+                </x-nav-link>
+                <x-nav-link href="{{ route('register') }}">
+                    {{ __('Registrar') }}
+                </x-nav-link>
+            </div>
+            @else
+            @auth
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 items-center justify-center h-auto">
+                {{-- NOTIFICACIONES --}}
+                <div
+                    class=" flex items-center justify-center relative flex-shrink-0 rounded-full bg-gray-800 p-2 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <a href="{{ route('notificaciones') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6 items-center">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                        </svg>
+                        @if ($count = auth()->user()->unreadNotifications->count())
+                        <span class="absolute -top-2 left-4 rounded-full bg-red-500 p-0.5 px-2 text-sm text-red-50">{{
+                            $count }}</span>
+                        @endif
+                    </a>
+                </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="flex flex-row items-center overflow-hidden relative bg-lime-500 text-black py-4 font-bold uppercase -- before:block
+                        <button class="flex flex-row items-center overflow-hidden relative bg-lime-500 text-black py-3 font-bold uppercase -- before:block
                         before:absolute before:h-full before:w-1/2 before:rounded-full before:bg-white before:top-0 before:left-1/4
                         before:transition-transform before:opacity-0 before:hover:opacity-100 hover:text-white hover:before:animate-ping
                         transition-all duration-300">
-                            <div>{{ auth()->user()->username}}</div>
+
+
+                            <div class="flex px-2 items-center">
+                                @if (auth()->user()->imagen)
+                                <img class="h-10 w-10 rounded-full items-center"
+                                    src="{{ asset('perfiles') . '/' . auth()->user()->imagen }}"
+                                    alt="Imagen del post {{ auth()->user()->username }}">
+                                @else
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+
+                                @endif
+
+                            </div>
+                            <div class="items-center">{{ auth()->user()->username}}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -68,6 +130,7 @@
                 </x-dropdown>
             </div>
             @endauth
+            @endif
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open"

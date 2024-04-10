@@ -33,6 +33,10 @@ class Post extends Model
     {
         return $this->hasMany(Post::class);
     }
+    public function like()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function user()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Notifications\LikePost as NotificationsLikePost;
 use Livewire\Component;
 
 class LikePost extends Component
@@ -28,6 +29,8 @@ class LikePost extends Component
             ]);
             $this->isLiked = true;
             $this->likes++;
+            //Crear notificacion y enviar email
+            $this->post->like->notify(new NotificationsLikePost($this->post->id, $this->post->titulo,  auth()->user()->id));
         }
     }
     public function render()

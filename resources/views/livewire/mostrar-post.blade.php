@@ -93,7 +93,7 @@
                 @if ($post->comentario->count())
                 @foreach ($post->comentario as $comentario)
                 <div class="p-5 border-lime-500 border-b bg-gray-900">
-                    <a href="{{ route('posts.index', $comentario->user) }}" class="font-bold text-gray-600 uppercase">{{
+                    <a href="{{ route('index', $comentario->user) }}" class="font-bold text-gray-600 uppercase">{{
                         $comentario->user->username }}</a>
                     <p>{{ $comentario->comentario }}</p>
                     <p class="text-sm text-gray-500">{{ $comentario->created_at->diffForHumans() }}</p>

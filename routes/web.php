@@ -4,7 +4,9 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\NuevoController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -20,19 +22,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', HomeController::class)->name('home');
+Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
+
+Route::get('editar-perfil', [PerfilController::class, 'index'])->middleware('auth')->name('perfil.index');
+Route::post('editar-perfil', [PerfilController::class, 'store'])->middleware('auth')->name('perfil.store');
+
 Route::get('/posts/nuevo', NuevoController::class)->name('nuevo');
-Route::get('/posts/{post}}', [PostController::class, 'index'])->name('posts.index');
-Route::get('/dashboard', [PostController::class, 'index'])->middleware('auth', 'verified')->name('dashboard');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts/create', [PostController::class, 'store'])->name('posts.store');
+
+Route::get('/posts/create', [PostController::class, 'create'])->middleware('auth')->name('posts.create');
+Route::post('/posts/create', [PostController::class, 'store'])->middleware('auth')->name('posts.store');
+Route::post('/posts/imagenes', [ImagenController::class, 'store'])->middleware('auth')->name('imagenes.store');
+Route::get('/posts/{post}', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::post('/posts/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');
-// Route::get('/posts/imagenes', [ImagenController::class, 'index'])->name('imagenes.index');
-Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware('auth')->name('posts.destroy');
 Route::post('/posts/{post}', [ComentarioController::class, 'store'])->name('comentario.store');
-
-
+// Route::get('/posts/imagenes', [ImagenController::class, 'index'])->name('imagenes.index');
 // //Like de posts
 Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.likes.store');
 Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('posts.likes.destroy');
@@ -40,11 +46,16 @@ Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('
 // //Save de posts
 Route::post('/posts/{post}/saves', [LikeController::class, 'store'])->name('posts.saves.store');
 Route::delete('/posts/{post}/saves', [LikeController::class, 'destroy'])->name('posts.saves.destroy');
+//perfiles de usuarios
 
-Route::middleware('auth', 'verified')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//Notificaciones
+Route::get('/notificaciones', NotificacionController::class)->middleware(['auth', 'verified'])->name('notificaciones');
+
 require __DIR__ . '/auth.php';
+Route::get('/{user:username}', [PostController::class, 'index'])->name('index');
