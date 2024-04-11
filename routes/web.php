@@ -42,12 +42,12 @@ Route::post('/posts/{post}', [ComentarioController::class, 'store'])->name('come
 // //Like de posts
 Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.likes.store');
 Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('posts.likes.destroy');
-
 // //Save de posts
 Route::post('/posts/{post}/saves', [LikeController::class, 'store'])->name('posts.saves.store');
 Route::delete('/posts/{post}/saves', [LikeController::class, 'destroy'])->name('posts.saves.destroy');
+//Categorias de post
+Route::get('/categoria/{categoria}', [PostController::class, 'category'])->name('posts.category');
 //perfiles de usuarios
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

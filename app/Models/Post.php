@@ -24,6 +24,14 @@ class Post extends Model
         'imagen_id',
         'user_id',
     ];
+    public function savesb()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function comentarioNotificacion()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function categoria()
     {

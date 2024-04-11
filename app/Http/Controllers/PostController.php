@@ -81,6 +81,14 @@ class PostController extends Controller
         );
     }
 
+    public function category(Categoria $categoria)
+    {
+        $posts = Post::where('categoria_id', $categoria->id)
+            ->latest('id')
+            ->paginate(6);
+        return view('posts.categoria', compact('posts'));
+    }
+
     // public function destroy(Post $post)
     // {
     //     $this->authorize('delete', $post);

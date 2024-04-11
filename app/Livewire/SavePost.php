@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Notifications\SavePost as NotificationsSavePost;
 use Livewire\Component;
 
 class SavePost extends Component
@@ -28,6 +29,8 @@ class SavePost extends Component
             ]);
             $this->isSaved = true;
             $this->saves++;
+            //Crear notificacion y enviar email
+            $this->post->savesb->notify(new NotificationsSavePost($this->post->id, $this->post->titulo,  auth()->user()->id));
         }
     }
     public function render()
