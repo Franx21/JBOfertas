@@ -86,7 +86,7 @@ class PostController extends Controller
         $posts = Post::where('categoria_id', $categoria->id)
             ->latest('id')
             ->paginate(6);
-        return view('posts.categoria', compact('posts'));
+        return view('posts.categoria', compact('posts', 'categoria'));
     }
 
     // public function destroy(Post $post)

@@ -1,9 +1,5 @@
 <div class="container sm:w-full sm:mx-auto">
-    <div>
-        <h3 class="text-center font-extrabold text-4xl text-lime-500 mb-12 mt-5">
-            Nuevas Ofertas Disponibles
-        </h3>
-    </div>
+    <livewire:filtrar-posts />
     <div class="bg-white dark:bg-gray-900 shadow-sm rounded-lg p-6 divide-y divide-lime-500">
         @forelse ($posts as $post)
         <div class="flex flex-col items-center py-4 sm:flex sm:h-full sm:py-5 md:flex-row">

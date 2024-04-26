@@ -5,7 +5,9 @@
         </h3>
     </div>
     <div class="bg-white dark:bg-gray-900 shadow-sm rounded-lg p-6 divide-y divide-lime-500">
+
         @forelse ($posts as $post)
+        @if ($post->likes->count() >= 10)
         <div class="flex flex-col items-center py-4 sm:flex sm:h-full sm:py-5 md:flex-row">
             <img class="lg:object-cover  rounded-lg md:w-44 md:h-44"
                 src="{{ asset('uploads/posts') . '/' . $post->imagen_id }}" alt="Imagen del post {{ $post->titulo }}">
@@ -87,7 +89,8 @@
                 </div>
             </div>
         </div>
-
+        @else
+        @endif
         @empty
         <p class="p-3 text-center text-sm text-gray-600">No hay ofertas aun</p>
         @endforelse

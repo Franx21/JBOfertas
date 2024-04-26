@@ -2,19 +2,20 @@
 
 namespace App\Livewire;
 
-use App\Models\Categoria;
 use App\Models\Post;
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
-class ListarCategorias extends Component
+class HomePosts extends Component
 {
     public $termino;
+    public $categoria;
 
     #[On('buscar')]
-    public function buscar($termino)
+    public function buscar($termino, $categoria)
     {
         $this->termino = $termino;
+        $this->categoria = $categoria;
     }
     public function render()
     {
@@ -22,11 +23,12 @@ class ListarCategorias extends Component
             $query->where('titulo', 'LIKE', "%" . $this->termino . "%");
         })->when($this->termino, function ($query) {
             $query->orWhere('tienda', $this->termino);
+        })->when($this->categoria, function ($query) {
+            $query->where('categoria_id', $this->categoria);
         })->paginate(10);
 
-        $categorias = Categoria::all();
-        return view('livewire.listar-categorias', [
-            'categorias' => $categorias,
+        return view('livewire.home-posts', [
+            'posts' => $posts
         ]);
     }
 }

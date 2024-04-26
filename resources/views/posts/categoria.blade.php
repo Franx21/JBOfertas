@@ -14,12 +14,11 @@
             </div>
             <div class="flex-1 w-64 bg-white flex col-span-3 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{--
-                    <livewire:filtrar-vacantes /> --}}
+                    <livewire:filtrar-posts />
                     <div class="container sm:w-full sm:mx-auto">
                         <div>
                             <h3 class="text-center font-extrabold text-4xl text-lime-500 mb-12 mt-5">
-                                Nuevas Ofertas Disponibles
+                                {{ $categoria->categoria }}
                             </h3>
                         </div>
                         <div class="bg-white dark:bg-gray-900 shadow-sm rounded-lg p-6 divide-y divide-lime-500">
