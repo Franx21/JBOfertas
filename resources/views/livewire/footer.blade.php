@@ -44,8 +44,9 @@
                     <div class="flex flex-col items-center gap-6 mb-8">
                         <div
                             class="flex flex-wrap items-center justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-grey-900">
-                            <a href="javascript:void(0)" class="text-gray-600 hover:text-white">Acerca de nosotros</a>
-                            <a href="javascript:void(0)" class="text-gray-600 hover:text-white">Tiendas</a>
+                            <a href="{{ route('nosotros') }}" class="text-gray-600 hover:text-white">Acerca de
+                                nosotros</a>
+                            <a href="{{ route('tiendas') }}" class="text-gray-600 hover:text-white">Tiendas</a>
                             <a href="javascript:void(0)" class="text-gray-600 hover:text-white">Partners</a>
                             <a href="javascript:void(0)" class="text-gray-600 hover:text-white">Ayuda</a>
                             <a href="javascript:void(0)" class="text-gray-600 hover:text-white">Terminos &

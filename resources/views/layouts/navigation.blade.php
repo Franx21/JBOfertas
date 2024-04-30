@@ -34,6 +34,7 @@
                         {{ __('Nuevo') }}
                     </x-nav-link>
                 </div>
+                @auth
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link class="items-center flex gap-1" :href="route('popular')">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -44,6 +45,7 @@
                         {{ __('Popular') }}
                     </x-nav-link>
                 </div>
+                @endauth
                 @auth
                 @can('posts.create')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
