@@ -1,16 +1,22 @@
 <?php
 
+use App\Http\Controllers\AyudaController;
+use App\Http\Controllers\CodigoController;
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\CookiesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\NosotrosController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\NuevoController;
+use App\Http\Controllers\PartnersController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\PoliticasController;
 use App\Http\Controllers\PopularController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TerminosController;
 use App\Http\Controllers\TiendasController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +42,12 @@ Route::get('/posts/nuevo', NuevoController::class)->name('nuevo');
 Route::get('/posts/popular', PopularController::class)->name('popular');
 Route::get('/nosotros', NosotrosController::class)->name('nosotros');
 Route::get('/tiendas', TiendasController::class)->name('tiendas');
+Route::get('/partners', PartnersController::class)->name('partners');
+Route::get('/ayuda', AyudaController::class)->name('ayuda');
+Route::get('/politicas', PoliticasController::class)->name('politicas');
+Route::get('/terminos', TerminosController::class)->name('terminos');
+Route::get('/cookies', CookiesController::class)->name('cookies');
+Route::get('/codigo', CodigoController::class)->name('codigo');
 
 Route::get('/posts/create', [PostController::class, 'create'])->middleware(['auth', 'can:posts.create'])->name('posts.create');
 Route::post('/posts/create', [PostController::class, 'store'])->middleware('auth')->name('posts.store');
