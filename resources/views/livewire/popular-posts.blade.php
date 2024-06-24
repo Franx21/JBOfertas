@@ -89,7 +89,6 @@
                 </div>
             </div>
         </div>
-        @else
         @endif
         @empty
         <p class="p-3 text-center text-sm text-gray-600">No hay ofertas aun</p>

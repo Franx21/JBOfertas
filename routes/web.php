@@ -33,7 +33,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
 
 Route::get('editar-perfil', [PerfilController::class, 'index'])->middleware('auth')->name('perfil.index');
 Route::post('editar-perfil', [PerfilController::class, 'store'])->middleware('auth')->name('perfil.store');
@@ -76,4 +75,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/notificaciones', NotificacionController::class)->middleware(['auth', 'verified'])->name('notificaciones');
 
 require __DIR__ . '/auth.php';
-Route::get('/{user:username}', [PostController::class, 'index'])->name('index');
+Route::get('/perfil/{user:username}', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('index');
+Route::get('/perfil/{user:username}/likes', LikeController::class)->name('perfil.likes');

@@ -1,7 +1,6 @@
 <div class="container sm:w-full sm:mx-auto">
-    @if ($posts->count())
     <div class="bg-white dark:bg-gray-900 shadow-sm rounded-lg p-6 divide-y divide-lime-500">
-        @forelse ($posts as $post)
+        @foreach ($posts as $post)
         <div class="flex flex-col items-center py-4 sm:flex sm:h-full sm:py-5 md:flex-row">
             <img class="lg:object-cover  rounded-lg md:w-44 md:h-44"
                 src="{{ asset('uploads/posts') . '/' . $post->imagen_id }}" alt="Imagen del post {{ $post->titulo }}">
@@ -9,7 +8,7 @@
                 <div class="sm:flex sm:justify-between">
                     <div class="sm:max-w-2xl pt-4 pb-2">
                         <a class="text-justify sm:text-xl sm:py-2 font-extrabold text-gray-600"
-                            href="{{ route('posts.show', ['post' => $post->id]) }}">
+                            href="{{ route('posts.show', ['post' => $post, 'user' => $post->user]) }}">
                             {{ $post->titulo }}
                         </a>
                     </div>
@@ -83,9 +82,6 @@
                 </div>
             </div>
         </div>
-        @empty
-        <p class="p-3 text-center text-sm text-gray-600">No hay ofertas aun</p>
-        @endforelse
-        @endif
+        @endforeach
     </div>
 </div>

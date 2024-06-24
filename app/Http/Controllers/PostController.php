@@ -10,12 +10,16 @@ use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['show', 'index']);
+    }
 
     public function index(User $user)
     {
         $posts = Post::where('user_id', $user->id)->latest()->paginate(12);
-        //$this->authorize('viewAny', Post::class);
-        return view('dashboard', [
+
+        return view('perfil.index', [
             'user' => $user,
             'posts' => $posts,
         ]);

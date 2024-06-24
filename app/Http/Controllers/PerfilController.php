@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -15,9 +16,14 @@ class PerfilController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(User $user)
     {
-        return view('perfil.index');
+        $posts = Post::where('user_id', $user->id)->latest()->paginate(12);
+        //$this->authorize('viewAny', Post::class);
+        return view('perfil.index', [
+            'user' => $user,
+            'posts' => $posts,
+        ]);
     }
 
     public function store(Request $request)
@@ -42,6 +48,6 @@ class PerfilController extends Controller
         $usuario->save();
 
         //redireccionar
-        return redirect()->route('posts.index', $usuario->username);
+        return redirect()->route('posts.index', auth()->user()->username);
     }
 }

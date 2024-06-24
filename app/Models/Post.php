@@ -46,6 +46,16 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function meGustas()
+    {
+        return $this->belongsToMany(User::class, 'likes');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class)->select(['username']);
@@ -54,11 +64,6 @@ class Post extends Model
     public function comentario()
     {
         return $this->hasMany(Comentario::class);
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
     }
 
     public function checkLike(User $user)
